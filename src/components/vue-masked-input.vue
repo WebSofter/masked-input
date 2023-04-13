@@ -3,7 +3,7 @@
     ref="selectPhone"
     data-widget-item="baseinput"
     class="flex flex-col relative"
-    data-websofter-masketinput="component"
+    data-wsofter-masketinput="component"
   >
     <!--vue-masket-input core-->
     <div data-children="core" class="w-full flex flex-col relative">

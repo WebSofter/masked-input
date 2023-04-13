@@ -7,7 +7,7 @@ Simple Masket Input for VueJs
 
 ## install
 ```sh
-npm i @websofter/vue-masket-input
+npm i @wsofter/vue-masket-input
 ```
 
 
@@ -71,7 +71,7 @@ npm i @websofter/vue-masket-input
 ## Use
  main.ts :
  ```js
-  import { MasketInput } from '@websofter/vue-masket-input';
+  import { MasketInput } from '@wsofter/vue-masket-input';
 
   // register as global component
   app.component('MasketInput', MasketInput);
@@ -79,7 +79,7 @@ npm i @websofter/vue-masket-input
  App.vue :
  ```js
  // import component style
- import '@websofter/vue-masket-input/style';
+ import '@wsofter/vue-masket-input/style';
  ```
 
  use component:

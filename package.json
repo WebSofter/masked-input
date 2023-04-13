@@ -1,7 +1,7 @@
 {
-  "name": "@websofter/vue-masket-input",
+  "name": "@wsofter/vue-masket-input",
   "version": "1.0.0",
-  "author": "@websofter",
+  "author": "@wsofter",
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check build-only",
@@ -59,21 +59,21 @@
   "description": "Simple Masket Input for VueJs",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/websofter/vue-masket-input.git"
+    "url": "git+https://github.com/wsofter/vue-masket-input.git"
   },
   "keywords": [
     "vuejs",
     "vue-masket-input",
     "typescript",
     "vite",
-    "websofter",
+    "wsofter",
     "vue component",
     "phone input",
     "masket input"
   ],
   "license": "GPL-3.0-or-later",
   "bugs": {
-    "url": "https://github.com/websofter/vue-masket-input/issues"
+    "url": "https://github.com/wsofter/vue-masket-input/issues"
   },
-  "homepage": "https://github.com/websofter/vue-masket-input#readme"
+  "homepage": "https://github.com/wsofter/vue-masket-input#readme"
 }
