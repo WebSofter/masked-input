@@ -1,6 +1,6 @@
 {
   "name": "@wsofter/masked-input",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "author": "@wsofter",
   "scripts": {
     "dev": "vite",
@@ -59,7 +59,7 @@
   "description": "Simple masked Input for VueJs",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wsofter/masked-input.git"
+    "url": "git+https://github.com/websofter/masked-input.git"
   },
   "keywords": [
     "vuejs",
@@ -69,11 +69,11 @@
     "wsofter",
     "vue component",
     "masked input",
-    "masked input"
+    "phone input"
   ],
   "license": "GPL-3.0-or-later",
   "bugs": {
-    "url": "https://github.com/wsofter/masked-input/issues"
+    "url": "https://github.com/websofter/masked-input/issues"
   },
-  "homepage": "https://github.com/wsofter/masked-input#readme"
+  "homepage": "https://github.com/websofter/masked-input#readme"
 }
