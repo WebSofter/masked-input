@@ -1,4 +1,4 @@
-# vue-masked-input
+# masked-input
 
 Simple masked Input for VueJs
 
@@ -7,7 +7,7 @@ Simple masked Input for VueJs
 
 ## install
 ```sh
-npm i @wsofter/vue-masked-input
+npm i @wsofter/masked-input
 ```
 
 
@@ -71,7 +71,7 @@ npm i @wsofter/vue-masked-input
 ## Use
  main.ts :
  ```js
-  import { maskedInput } from '@wsofter/vue-masked-input';
+  import { maskedInput } from '@wsofter/masked-input';
 
   // register as global component
   app.component('maskedInput', maskedInput);
@@ -79,7 +79,7 @@ npm i @wsofter/vue-masked-input
  App.vue :
  ```js
  // import component style
- import '@wsofter/vue-masked-input/style';
+ import '@wsofter/masked-input/style';
  ```
 
  use component:

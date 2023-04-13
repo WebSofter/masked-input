@@ -5,7 +5,7 @@
     class="flex flex-col relative"
     data-wsofter-maskedinput="component"
   >
-    <!--vue-masked-input core-->
+    <!--masked-input core-->
     <div data-children="core" class="w-full flex flex-col relative">
       <!---->
       <label

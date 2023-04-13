@@ -1,5 +1,5 @@
 {
-  "name": "@wsofter/vue-masked-input",
+  "name": "@wsofter/masked-input",
   "version": "1.2.0",
   "author": "@wsofter",
   "scripts": {
@@ -20,12 +20,12 @@
   "files": [
     "dist"
   ],
-  "main": "./dist/vue-masked-input.umd.js",
-  "module": "./dist/vue-masked-input.es.js",
+  "main": "./dist/masked-input.umd.js",
+  "module": "./dist/masked-input.es.js",
   "exports": {
     ".": {
-      "import": "./dist/vue-masked-input.es.js",
-      "require": "./dist/vue-masked-input.umd.js"
+      "import": "./dist/masked-input.es.js",
+      "require": "./dist/masked-input.umd.js"
     },
     "./style": {
       "import": "./dist/style.css",
@@ -59,11 +59,11 @@
   "description": "Simple masked Input for VueJs",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wsofter/vue-masked-input.git"
+    "url": "git+https://github.com/wsofter/masked-input.git"
   },
   "keywords": [
     "vuejs",
-    "vue-masked-input",
+    "masked-input",
     "typescript",
     "vite",
     "wsofter",
@@ -73,7 +73,7 @@
   ],
   "license": "GPL-3.0-or-later",
   "bugs": {
-    "url": "https://github.com/wsofter/vue-masked-input/issues"
+    "url": "https://github.com/wsofter/masked-input/issues"
   },
-  "homepage": "https://github.com/wsofter/vue-masked-input#readme"
+  "homepage": "https://github.com/wsofter/masked-input#readme"
 }

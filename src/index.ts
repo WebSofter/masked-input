@@ -1,1 +1,1 @@
-export { default as MaskedInput } from "@/components/vue-masked-input.vue";
+export { default as MaskedInput } from "@/components/masked-input.vue";
