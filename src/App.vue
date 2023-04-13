@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, type Ref } from "vue";
 
-import maskedInput from "@/components/vue-masked-input.vue.js";
+import maskedInput from "@/components/vue-masked-input.vue";
 
 const masked: Ref<string> = ref("");
 const country: Ref<string> = ref("");

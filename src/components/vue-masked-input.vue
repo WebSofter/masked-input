@@ -60,7 +60,7 @@
           :name="name"
           :id="name"
           :value="masked"
-          @input="onmaskedInput($event)"
+          @input="onMaskedInput($event)"
           :autocomplete="'off'"
           spellcheck="false"
           v-typing="{
@@ -169,7 +169,7 @@ import Red from "./icons/red-info.vue";
 import Green from "./icons/green-info.vue";
 
 import countries, { type Country } from "./parts/all-countries";
-import parseMaskedNumber from "libmaskednumber-js";
+import parsePhoneNumber from "libphonenumber-js";
 import { typing } from "../assets/directives";
 
 const vTyping = { ...typing };
@@ -248,7 +248,7 @@ const toggleSelect = () => {
  * @param val
  */
 const formatmaskedInput = (val: string): Record<any, any> | undefined => {
-  const maskedNumber: any = parseMaskedNumber(`+${val}`);
+  const maskedNumber: any = parsePhoneNumber(`+${val}`);
   if (maskedNumber) {
     masked.value = maskedNumber.nationalNumber;
 
@@ -284,7 +284,7 @@ const emitMasked = (): void => {
  * @returns {}
  */
 const emitMaskedData = (): void => {
-  const ph = parseMaskedNumber(
+  const ph = parsePhoneNumber(
     `+${defaultSelected.value.dialCode}${masked.value}`
   );
   emit("maskedData", {
@@ -321,7 +321,7 @@ const choose = (country: Country) => {
  * bind on input
  * @param event
  */
-const onmaskedInput = (event: any) => {
+const onMaskedInput = (event: any) => {
   event.target.value = masked.value = String(event.target.value) //.replace(/\D/g, "");
   emitMasked();
 };

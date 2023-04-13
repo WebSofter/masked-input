@@ -1,6 +1,6 @@
 {
   "name": "@wsofter/vue-masked-input",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "author": "@wsofter",
   "scripts": {
     "dev": "vite",
@@ -33,7 +33,7 @@
     }
   },
   "dependencies": {
-    "libmaskednumber-js": "^1.10.11",
+    "libphonenumber-js": "^1.10.26",
     "maska": "^2.1.8",
     "sass": "^1.54.1",
     "vue": "^3.2.37"
