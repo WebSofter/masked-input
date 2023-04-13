@@ -1,11 +1,11 @@
 <template>
   <div
-    ref="selectPhone"
+    ref="selectMasked"
     data-widget-item="baseinput"
     class="flex flex-col relative"
-    data-wsofter-masketinput="component"
+    data-wsofter-maskedinput="component"
   >
-    <!--vue-masket-input core-->
+    <!--vue-masked-input core-->
     <div data-children="core" class="w-full flex flex-col relative">
       <!---->
       <label
@@ -26,14 +26,14 @@
       <!--input-->
       <div
         data-children="inputcore"
-        ref="selectPhoneButton"
+        ref="selectMaskedButton"
         class="bg-white baseinput-core border w-full border-gray rounded-lg py-3 px-4 flex flex-shrink flex-nowrap items-center space-x-2"
         :class="{ error: hasError, success: hasSuccess }"
       >
         <span
           @click="toggleSelect()"
           class="inline-flex flex-nowrap items-center space-x-2 cursor-pointer"
-          ref="basePhoneArrow"
+          ref="baseMaskedArrow"
           data-children="arrowGroup"
         >
           <template v-if="arrow">
@@ -59,12 +59,12 @@
           ref="inputBase"
           :name="name"
           :id="name"
-          :value="phone"
-          @input="onMasketInput($event)"
+          :value="masked"
+          @input="onmaskedInput($event)"
           :autocomplete="'off'"
           spellcheck="false"
           v-typing="{
-            finish: emitPhoneData,
+            finish: emitMaskedData,
             timing: 100,
           }"
           v-maska 
@@ -74,7 +74,7 @@
       <!--select option-->
       <div
         ref="selectOptions"
-        class="w-full rounded border border-DADEE3 bg-white absolute z-one lbgm-phone-scrll"
+        class="w-full rounded border border-DADEE3 bg-white absolute z-one lbgm-masked-scrll"
         v-if="openSelect"
         data-children="countriesList"
         :class="{
@@ -169,7 +169,7 @@ import Red from "./icons/red-info.vue";
 import Green from "./icons/green-info.vue";
 
 import countries, { type Country } from "./parts/all-countries";
-import parsePhoneNumber from "libphonenumber-js";
+import parseMaskedNumber from "libmaskednumber-js";
 import { typing } from "../assets/directives";
 
 const vTyping = { ...typing };
@@ -192,14 +192,14 @@ const props = withDefaults(defineProps<Props>(), {
   allowed: () => ["BJ", "CI"],
 });
 
-const emit = defineEmits(["phone", "country", "phoneData"]);
+const emit = defineEmits(["masked", "country", "maskedData"]);
 
 const openSelect: Ref<boolean> = ref(false);
 const defaultSelected: Ref<Record<string, string>> = ref<Record<string, string>>({});
 const defaultCountry: Ref<string> = toRef(props, "defaultCountry");
 const filterCountries: Ref<string[]> = toRef(props, "allowed");
-const basePhoneArrow: Ref<HTMLElement | null> = ref(null);
-const phone: Ref<string> = ref("");
+const baseMaskedArrow: Ref<HTMLElement | null> = ref(null);
+const masked: Ref<string> = ref("");
 const inputBase: Ref<HTMLInputElement | null> = ref(null);
 
 const maska: Ref<string> = toRef(props, "maska"); 
@@ -213,7 +213,7 @@ const that: ComponentInternalInstance | null = getCurrentInstance();
  */
 const cev_dash_select = () => {
   const event = new CustomEvent("CEV_SELECT_POPUP", {
-    detail: { opened: openSelect.value, target: that?.refs.selectPhone },
+    detail: { opened: openSelect.value, target: that?.refs.selectMasked },
   });
   document.body.dispatchEvent(event);
 };
@@ -237,24 +237,24 @@ const toggleSelect = () => {
   openSelect.value = !openSelect.value;
 
   // calculate popup position: top or bottom
-  const selectRect = (that?.refs.selectPhone as HTMLElement).getBoundingClientRect();
+  const selectRect = (that?.refs.selectMasked as HTMLElement).getBoundingClientRect();
   // y
   popupPos.value = selectRect.bottom < listHeight.value ? "top" : "bottom";
 };
 
 /**
- * formatMasketInput
- * used to format Phone Input
+ * formatmaskedInput
+ * used to format Masked Input
  * @param val
  */
-const formatMasketInput = (val: string): Record<any, any> | undefined => {
-  const phoneNumber: any = parsePhoneNumber(`+${val}`);
-  if (phoneNumber) {
-    phone.value = phoneNumber.nationalNumber;
+const formatmaskedInput = (val: string): Record<any, any> | undefined => {
+  const maskedNumber: any = parseMaskedNumber(`+${val}`);
+  if (maskedNumber) {
+    masked.value = maskedNumber.nationalNumber;
 
     return {
-      iso2: phoneNumber.country,
-      dialCode: phoneNumber.countryCallingCode,
+      iso2: maskedNumber.country,
+      dialCode: maskedNumber.countryCallingCode,
       name: function () {
         return (
           Array.from(countries).find((o: {iso2: string}) => o.iso2 === this.iso2) as unknown as { name: string }
@@ -269,25 +269,25 @@ const formatMasketInput = (val: string): Record<any, any> | undefined => {
 };
 
 /**
- * emitPhone
- * used to emit phone in internationalFormat
+ * emitMasked
+ * used to emit masked in internationalFormat
  */
-const emitPhone = (): void => {
-  if (phone.value)
-    emit("phone", `${defaultSelected.value.dialCode}${phone.value}`);
-  else emit("phone", "");
+const emitMasked = (): void => {
+  if (masked.value)
+    emit("masked", `${defaultSelected.value.dialCode}${masked.value}`);
+  else emit("masked", "");
 };
 
 /**
- * emitPhoneData
- * Used to emit phoneData as an object
+ * emitMaskedData
+ * Used to emit maskedData as an object
  * @returns {}
  */
-const emitPhoneData = (): void => {
-  const ph = parsePhoneNumber(
-    `+${defaultSelected.value.dialCode}${phone.value}`
+const emitMaskedData = (): void => {
+  const ph = parseMaskedNumber(
+    `+${defaultSelected.value.dialCode}${masked.value}`
   );
-  emit("phoneData", {
+  emit("maskedData", {
     country: ph?.country,
     dialCode: ph?.countryCallingCode,
     nationalNumber: ph?.nationalNumber,
@@ -302,8 +302,8 @@ const emitPhoneData = (): void => {
  */
 const emitAll = () :void => {
   emit("country", defaultSelected.value.iso2);
-  emitPhone();
-  emitPhoneData();
+  emitMasked();
+  emitMaskedData();
 }
 
 /**
@@ -321,9 +321,9 @@ const choose = (country: Country) => {
  * bind on input
  * @param event
  */
-const onMasketInput = (event: any) => {
-  event.target.value = phone.value = String(event.target.value) //.replace(/\D/g, "");
-  emitPhone();
+const onmaskedInput = (event: any) => {
+  event.target.value = masked.value = String(event.target.value) //.replace(/\D/g, "");
+  emitMasked();
 };
 
 watch(openSelect, () => {
@@ -333,14 +333,14 @@ watch(openSelect, () => {
 
 onMounted(() => {
   // initialize default country selected
-  defaultSelected.value = formatMasketInput(props.value) as Record<any, any>;
+  defaultSelected.value = formatmaskedInput(props.value) as Record<any, any>;
   emitAll();
 
   // outside
   document.addEventListener("click", (event) => {
     if (
-      basePhoneArrow.value &&
-      !(basePhoneArrow.value as HTMLElement).contains(event.target as Node)
+      baseMaskedArrow.value &&
+      !(baseMaskedArrow.value as HTMLElement).contains(event.target as Node)
     ) {
       openSelect.value = false;
     }

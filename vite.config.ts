@@ -8,8 +8,8 @@ export default defineConfig({
   build: {
     lib: {
       entry: path.resolve(__dirname, "src/index.ts"),
-      name: "MasketInput",
-      fileName: (format) => `masket-input.${format}.js`,
+      name: "maskedInput",
+      fileName: (format) => `masked-input.${format}.js`,
     },
     rollupOptions: {
       // make sure to externalize deps that shouldn't be bundled

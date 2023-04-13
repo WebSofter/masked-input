@@ -1,1 +1,1 @@
-export { default as PhoneInput } from "@/components/vue-masked-input.vue";
+export { default as MaskedInput } from "@/components/vue-masked-input.vue";

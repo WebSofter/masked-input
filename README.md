@@ -1,13 +1,13 @@
-# vue-masket-input
+# vue-masked-input
 
-Simple Masket Input for VueJs
+Simple masked Input for VueJs
 
 <img width="599" alt="image" src="https://user-images.githubusercontent.com/92580505/182828046-989095ca-f6bf-420e-92fc-98fb99dab25e.png">
 
 
 ## install
 ```sh
-npm i @wsofter/vue-masket-input
+npm i @wsofter/vue-masked-input
 ```
 
 
@@ -55,41 +55,41 @@ npm i @wsofter/vue-masket-input
  ### arrow
  ```html
  <!-- to change arrow icon-->
- <phone-input>
+ <masked-input>
   <template #arrow><icon /><template>
- </phone-input>
+ </masked-input>
  ```
 
  use global slot to append content at the end of the component.
  ```html
- <phone-input>
+ <masked-input>
    <div>Hello</div>
- </phone-input>
+ </masked-input>
  ```
 
 
 ## Use
  main.ts :
  ```js
-  import { MasketInput } from '@wsofter/vue-masket-input';
+  import { maskedInput } from '@wsofter/vue-masked-input';
 
   // register as global component
-  app.component('MasketInput', MasketInput);
+  app.component('maskedInput', maskedInput);
  ```
  App.vue :
  ```js
  // import component style
- import '@wsofter/vue-masket-input/style';
+ import '@wsofter/vue-masked-input/style';
  ```
 
  use component:
  ```html
-    <phone-input
-      @phone="phone = $event"
+    <masked-input
+      @masked="masked = $event"
       @country="country = $event"
-      @phoneData="phoneData = $event"
-      name="cphone"
-      label="Entrer votre téléphone"
+      @maskedData="maskedData = $event"
+      name="cmasked"
+      label="Entrer votre télémasked"
       required
       :allowed="[]"
       :value="'22997788842'"
@@ -98,9 +98,9 @@ npm i @wsofter/vue-masket-input
  <img width="675" alt="image" src="https://user-images.githubusercontent.com/92580505/182823223-6be9aa4c-b4d8-4835-aaae-8b79052c0caf.png">
 
  ```js
-  console.log(phone) : 22997788842
+  console.log(masked) : 22997788842
   console.log(country) : BJ
-  console.log(phoneData) : { "country": "BJ", "dialCode": "229", "nationalNumber": "97788842", "number": "+22997788842", "isValid": true }
+  console.log(maskedData) : { "country": "BJ", "dialCode": "229", "nationalNumber": "97788842", "number": "+22997788842", "isValid": true }
  ```
 
  ## Use it with Vee-validate
@@ -109,11 +109,11 @@ npm i @wsofter/vue-masket-input
 
  ```html
  <template>
-  <phone-input
+  <masked-input
     :has-error="hasError"
     :errorMessage="errorMessage"
-    @phoneData="validatePhone"
-    ref="masketInput"
+    @maskedData="validateMasked"
+    ref="maskedInput"
   />
 </template>
 ```
@@ -122,7 +122,7 @@ npm i @wsofter/vue-masket-input
 import { useField } from 'vee-validate';
 import { computed, onMounted, getCurrentInstance } from 'vue';
 
-interface IPhoneData {
+interface IMaskedData {
   country?: string;
   dialCode?: string;
   nationalNumber?: string;
@@ -150,21 +150,21 @@ export default {
       return errorMessage.value !== undefined;
     });
 
-    const validatePhone = (data: IPhoneData) => {
+    const validateMasked = (data: IMaskedData) => {
       handleChange(data.nationalNumber, false);
       context.emit('inputData', data);
     };
 
     onMounted(() => {
-      if (that?.refs.masketInput.phone) {
-        handleChange(that.refs.masketInput.phone);
+      if (that?.refs.maskedInput.masked) {
+        handleChange(that.refs.maskedInput.masked);
       }
     });
 
     return {
       hasError,
       errorMessage,
-      validatePhone,
+      validateMasked,
     };
   },
 };

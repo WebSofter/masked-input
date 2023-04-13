@@ -1,23 +1,23 @@
 <script setup lang="ts">
 import { ref, type Ref } from "vue";
 
-import MasketInput from "@/components/vue-masked-input.vue.js";
+import maskedInput from "@/components/vue-masked-input.vue.js";
 
-const phone: Ref<string> = ref("");
+const masked: Ref<string> = ref("");
 const country: Ref<string> = ref("");
-const phoneData: Ref<Record<any, any>> = ref({});
+const maskedData: Ref<Record<any, any>> = ref({});
 </script>
 
 <template>
-  {{ phone }} - {{ country }} - {{ phoneData }}
+  {{ masked }} - {{ country }} - {{ maskedData }}
   <!-- app -->
   <div class="w-64 m-auto mt-10 flex flex-col">
-    <masket-input
-      @phone="phone = $event"
+    <masked-input
+      @masked="masked = $event"
       @country="country = $event"
-      @phoneData="phoneData = $event"
-      name="cphone"
-      label="Entrer votre téléphone"
+      @maskedData="maskedData = $event"
+      name="cmasked"
+      label="Entrer votre télémasked"
       required
       :allowed="[]"
       :value="'22995318207'"
