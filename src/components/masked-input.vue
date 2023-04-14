@@ -27,7 +27,7 @@
       <div
         data-children="inputcore"
         ref="selectMaskedButton"
-        class="bg-white baseinput-core border w-full border-gray rounded-lg py-3 px-4 flex flex-shrink flex-nowrap items-center space-x-2"
+        class="bg-white baseinput-core border w-full border-purple rounded-sm py-3 px-4 flex flex-shrink flex-nowrap items-center space-x-2"
         :class="{ error: hasError, success: hasSuccess }"
       >
         <span
@@ -36,6 +36,7 @@
           ref="baseMaskedArrow"
           data-children="arrowGroup"
         >
+          <img class="mi-select-icon-selected" v-if="icon" :src="icon"/>
           <template v-if="arrow">
             <span v-if="$slots.arrow" class="inline-flex flex-shrink-0">
               <slot name="arrow" />
@@ -59,7 +60,7 @@
           ref="inputBase"
           :name="name"
           :id="name"
-          :value="masked"
+          :value="maskedValue"
           @input="onMaskedInput($event)"
           :autocomplete="'off'"
           spellcheck="false"
@@ -86,12 +87,14 @@
         }"
       >
         <div
-          class="w-full py-2 px-4 cursor-pointer text-left hover:bg-217-242-236-dt5"
+          class="w-full py-2 px-4 cursor-pointer text-left hover:bg-217-242-236-dt5 mi-option-item"
           v-for="(country, index) in allowedCountries"
           @click="choose(country)"
           :key="index"
           :data-country="country.iso2"
         >
+        <!--v-if="icons.map(c => c[country.iso2])[0]" -->
+          <img class="mi-select-icon" v-if="icons.filter(c => c[country.iso2])[0][country.iso2]" :src="icons.filter(c => c[country.iso2])[0][country.iso2]"/>
           <span class="font-semibold text-xs text-394452">
             {{ country.name }}
           </span>
@@ -150,7 +153,9 @@ export interface Props {
   arrow?: boolean;
   listHeight?: number;
   allowed?: string[];
-  maska?: string
+  icons?: any[];
+  maska?: string;
+  popupPos?: string;
 }
 
 import {
@@ -184,27 +189,29 @@ const props = withDefaults(defineProps<Props>(), {
   placeholder: "",
   name: "",
   required: false,
-  defaultCountry: "CI",
+  defaultCountry: "RU",
   arrow: true,
   listHeight: 150,
   maska: "",
-
-  allowed: () => ["BJ", "CI"],
+  popupPos: "bottom",
+  allowed: () => [],
+  icons: () => [],
 });
 
-const emit = defineEmits(["masked", "country", "maskedData"]);
+const emit = defineEmits(["maskedValue", "country", "maskedData"]);
 
 const openSelect: Ref<boolean> = ref(false);
 const defaultSelected: Ref<Record<string, string>> = ref<Record<string, string>>({});
 const defaultCountry: Ref<string> = toRef(props, "defaultCountry");
 const filterCountries: Ref<string[]> = toRef(props, "allowed");
 const baseMaskedArrow: Ref<HTMLElement | null> = ref(null);
-const masked: Ref<string> = ref("");
+const maskedValue: Ref<string> = ref("");
 const inputBase: Ref<HTMLInputElement | null> = ref(null);
 
 const maska: Ref<string> = toRef(props, "maska"); 
-
-const popupPos = ref("bottom");
+const icon: Ref<string> = ref('');
+const popupPos = toRef(props, "popupPos");
+const icons = toRef(props, "icons");
 const listHeight = toRef(props, "listHeight");
 const that: ComponentInternalInstance | null = getCurrentInstance();
 
@@ -222,10 +229,7 @@ const cev_dash_select = () => {
  * filt allowedCountries from props
  */
 const allowedCountries = computed((): Country[] => {
-  const tbl: Country[] =
-    filterCountries.value.length !== 0
-      ? countries.filter((o: Country) => filterCountries.value.includes(o.iso2))
-      : countries;
+  const tbl: Country[] = filterCountries.value.length !== 0 ? countries.filter((o: Country) => filterCountries.value.includes(o.iso2)) : countries;
   return tbl;
 });
 
@@ -243,14 +247,14 @@ const toggleSelect = () => {
 };
 
 /**
- * formatmaskedInput
+ * formatMaskedInput
  * used to format Masked Input
  * @param val
  */
-const formatmaskedInput = (val: string): Record<any, any> | undefined => {
+const formatMaskedInput = (val: string): Record<any, any> | undefined => {
   const maskedNumber: any = parsePhoneNumber(`+${val}`);
   if (maskedNumber) {
-    masked.value = maskedNumber.nationalNumber;
+    maskedValue.value = maskedNumber.nationalNumber;
 
     return {
       iso2: maskedNumber.country,
@@ -273,9 +277,9 @@ const formatmaskedInput = (val: string): Record<any, any> | undefined => {
  * used to emit masked in internationalFormat
  */
 const emitMasked = (): void => {
-  if (masked.value)
-    emit("masked", `${defaultSelected.value.dialCode}${masked.value}`);
-  else emit("masked", "");
+  icon.value = icons.value.filter(c => c[defaultSelected.value.iso2])[0][defaultSelected.value.iso2]
+  if (maskedValue.value) emit("maskedValue", `${defaultSelected.value.dialCode}${maskedValue.value}`);
+  else emit("maskedValue", "");
 };
 
 /**
@@ -285,9 +289,10 @@ const emitMasked = (): void => {
  */
 const emitMaskedData = (): void => {
   const ph = parsePhoneNumber(
-    `+${defaultSelected.value.dialCode}${masked.value}`
+    `+${defaultSelected.value.dialCode}${maskedValue.value}`
   );
   emit("maskedData", {
+    icon: icon.value,
     country: ph?.country,
     dialCode: ph?.countryCallingCode,
     nationalNumber: ph?.nationalNumber,
@@ -322,7 +327,7 @@ const choose = (country: Country) => {
  * @param event
  */
 const onMaskedInput = (event: any) => {
-  event.target.value = masked.value = String(event.target.value) //.replace(/\D/g, "");
+  event.target.value = maskedValue.value = String(event.target.value) //.replace(/\D/g, "");
   emitMasked();
 };
 
@@ -333,7 +338,7 @@ watch(openSelect, () => {
 
 onMounted(() => {
   // initialize default country selected
-  defaultSelected.value = formatmaskedInput(props.value) as Record<any, any>;
+  defaultSelected.value = formatMaskedInput(props.value) as Record<any, any>;
   emitAll();
 
   // outside
@@ -350,7 +355,18 @@ onMounted(() => {
 
 <style scoped lang="scss">
 @import '../assets/tailwind.scss';
-
+.mi-select-icon, .mi-select-icon-selected {
+  float: left;
+  height: 20px;
+  width: auto;
+  margin-right:3px;
+}
+.mi-select-icon-selected {
+  position: absolute;
+}
+.mi-option-item {
+  line-height: 1;
+}
 [data-children="countriesList"] {
   overflow-y: auto;
   filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.15));
@@ -359,7 +375,6 @@ onMounted(() => {
 [data-children="inputcore"] {
   input {
     &::placeholder {
-      font-weight: bold;
       color: gray;
     }
 
@@ -382,7 +397,7 @@ onMounted(() => {
 
   &.success {
     background: #edf9f0;
-    border: 1px solid #287d3c;
+    border: 1px solid #5F63F2;
 
     input {
       -webkit-box-shadow: 0 0 0px 1000px #edf9f0 inset !important;

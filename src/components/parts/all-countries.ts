@@ -13,6 +13,7 @@
 //    International dial code
 // ]
 export type Country = {
+  icon: string,
   name: string;
   dialCode: string;
   iso2: string;

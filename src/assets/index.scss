@@ -8,8 +8,8 @@
 {
   .lbgm-masked-scrll::-webkit-scrollbar
   {
-   width:6px;
-   height:6px;
+   width:8px;
+   height:8px;
   }
   .lbgm-masked-scrll::-webkit-scrollbar-track
   {
@@ -17,8 +17,8 @@
   }
   .lbgm-masked-scrll::-webkit-scrollbar-thumb
   {
-    border-radius:6px;
-    background: rgba(0,106,82,.8);
+    border-radius:8px;
+    background: rgba(95, 99, 242, 0.8);
     border:0;
     display: none;
   }
@@ -38,7 +38,7 @@
 {
   .lbgm-masked-scrll
   {
-    scrollbar-color: rgba(0,106,82,.8) transparent;
+    scrollbar-color: rgba(95, 99, 242, 0.8) transparent;
     scrollbar-width: none;
     &:hover{
     scrollbar-width: thin;

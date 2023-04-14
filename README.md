@@ -2,7 +2,7 @@
 
 Simple masked Input for VueJs
 
-<img width="599" alt="image" src="https://user-images.githubusercontent.com/92580505/182828046-989095ca-f6bf-420e-92fc-98fb99dab25e.png">
+<img width="599" alt="image" src="screen-1.png">
 
 
 ## install
@@ -29,13 +29,14 @@ npm i @wsofter/masked-input
     listHeight?: number;
     allowed?: string[];
     maska?: string;
+    icons?: any[];
  }
   ```
 
  Default values:
  ```js
  {
-  value: "", // like '22997000000', ${dialCode}${nationalNumber}
+  value: "", // like '79253826216', ${dialCode}${nationalNumber}
   label: "",
   hasError: false,
   hasSuccess: false,
@@ -44,11 +45,12 @@ npm i @wsofter/masked-input
   placeholder: "",
   name: "",
   required: false,
-  defaultCountry: "CI",
+  defaultCountry: "RU",
   arrow: true,
   listHeight: 150,
-  allowed: () => ["BJ", "CI"],
+  allowed: () => ["RU", "UA"],
   maska: "",
+  icons: [],
  }
  ```
 
@@ -87,23 +89,23 @@ npm i @wsofter/masked-input
  use component:
  ```html
     <masked-input
-      @masked="masked = $event"
+      @maskedValue="maskedValue = $event"
       @country="country = $event"
       @maskedData="maskedData = $event"
       name="cmasked"
-      label="Entrer votre télémasked"
+      label="Enter your phone number"
       required
       :allowed="[]"
-      :value="'22997788842'"
-      maska="+#(###) ###-##-##"
+      :value="'79253826216'"
+      maska="(###) ###-##-##"
     />
  ```
- <img width="675" alt="image" src="https://user-images.githubusercontent.com/92580505/182823223-6be9aa4c-b4d8-4835-aaae-8b79052c0caf.png">
+ <img width="675" alt="image" src="screen-2.png">
 
  ```js
-  console.log(masked) : 22997788842
-  console.log(country) : BJ
-  console.log(maskedData) : { "country": "BJ", "dialCode": "229", "nationalNumber": "97788842", "number": "+22997788842", "isValid": true }
+  console.log(maskedValue) : 7(925) 382-62-16
+  console.log(country) : RU
+  console.log(maskedData) : { "country": "RU", "dialCode": "7", "nationalNumber": "9253826216", "number": "+79253826216", "isValid": true }
  ```
 
  ## Use it with Vee-validate
@@ -160,8 +162,8 @@ export default {
     };
 
     onMounted(() => {
-      if (that?.refs.maskedInput.masked) {
-        handleChange(that.refs.maskedInput.masked);
+      if (that?.refs.maskedInput.maskedValue) {
+        handleChange(that.refs.maskedInput.maskedValue);
       }
     });
 
