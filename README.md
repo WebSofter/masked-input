@@ -28,6 +28,7 @@ npm i @wsofter/masked-input
     arrow?: boolean;
     listHeight?: number;
     allowed?: string[];
+    maska?: string;
  }
   ```
 
@@ -47,6 +48,7 @@ npm i @wsofter/masked-input
   arrow: true,
   listHeight: 150,
   allowed: () => ["BJ", "CI"],
+  maska: "",
  }
  ```
 
@@ -93,6 +95,7 @@ npm i @wsofter/masked-input
       required
       :allowed="[]"
       :value="'22997788842'"
+      maska="+#(###) ###-##-##"
     />
  ```
  <img width="675" alt="image" src="https://user-images.githubusercontent.com/92580505/182823223-6be9aa4c-b4d8-4835-aaae-8b79052c0caf.png">
@@ -114,6 +117,7 @@ npm i @wsofter/masked-input
     :errorMessage="errorMessage"
     @maskedData="validateMasked"
     ref="maskedInput"
+    maska="##-##"
   />
 </template>
 ```
