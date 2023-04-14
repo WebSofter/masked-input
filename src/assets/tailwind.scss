@@ -632,6 +632,10 @@ video {
   border-radius: 0.5rem;
 }
 
+.rounded-sm {
+  border-radius: 0.125rem;
+}
+
 .border {
   border-width: 1px;
 }
@@ -645,14 +649,6 @@ video {
   border-color: rgb(218 222 227 / var(--tw-border-opacity));
 }
 
-.border-gray {
-  --tw-border-opacity: 1;
-  border-color: rgb(133 140 148 / var(--tw-border-opacity));
-}
-.border-purple {
-  --tw-border-opacity: 1;
-  border-color: rgb(140 148 255 / var(--tw-border-opacity));
-}
 .bg-danger-light {
   --tw-bg-opacity: 1;
   background-color: rgb(254 239 239 / var(--tw-bg-opacity));
