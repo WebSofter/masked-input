@@ -75,5 +75,6 @@
   "bugs": {
     "url": "https://github.com/websofter/masked-input/issues"
   },
-  "homepage": "https://github.com/websofter/masked-input#readme"
+  "homepage": "https://github.com/websofter/masked-input#readme",
+  "readme": "README.md"
 }
