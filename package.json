@@ -1,7 +1,6 @@
 {
   "name": "@wsofter/masked-input",
   "version": "1.2.8",
-  "private": true,
   "author": "@wsofter",
   "scripts": {
     "dev": "vite",
