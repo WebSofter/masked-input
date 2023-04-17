@@ -156,6 +156,7 @@ export interface Props {
   icons?: any[];
   maska?: string;
   popupPos?: string;
+  firstCountry?: string;
 }
 
 import {
@@ -194,6 +195,7 @@ const props = withDefaults(defineProps<Props>(), {
   listHeight: 150,
   maska: "",
   popupPos: "bottom",
+  firstCountry: "",
   allowed: () => [],
   icons: () => [],
 });
@@ -212,6 +214,7 @@ const maska: Ref<string> = toRef(props, "maska");
 const icon: Ref<string> = ref('');
 const popupPos = toRef(props, "popupPos");
 const icons = toRef(props, "icons");
+const firstCountry = toRef(props, "firstCountry")
 const listHeight = toRef(props, "listHeight");
 const that: ComponentInternalInstance | null = getCurrentInstance();
 
@@ -230,7 +233,17 @@ const cev_dash_select = () => {
  */
 const allowedCountries = computed((): Country[] => {
   const tbl: Country[] = filterCountries.value.length !== 0 ? countries.filter((o: Country) => filterCountries.value.includes(o.iso2)) : countries;
-  return tbl;
+  if(firstCountry.value) {
+    const country = tbl.find(item => item.iso2 == firstCountry.value)
+    if(country) {
+      const fltrTbl = tbl.filter((item: Country) => item.iso2 !== firstCountry.value)
+      fltrTbl.unshift(country)
+      return fltrTbl
+    }
+    else return tbl
+  } else {
+    return tbl
+  }
 });
 
 /**

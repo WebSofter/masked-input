@@ -31,6 +31,7 @@ const maskedData: Ref<Record<any, any>> = ref({});
       :allowed="['RU', 'KG', 'BY', 'AM', 'KZ', 'UZ']"
       :value="'79253826216'"
       maska="(###) ###-##-##"
+      firstCountry="RU"
     />
   </div>
 </template>

@@ -30,6 +30,7 @@ npm i @wsofter/masked-input
     allowed?: string[];
     maska?: string;
     icons?: any[];
+    firstCountry?: string;
  }
   ```
 
@@ -51,6 +52,7 @@ npm i @wsofter/masked-input
   allowed: () => ["RU", "UA"],
   maska: "",
   icons: [],
+  firstCountry: ""
  }
  ```
 
